@@ -1,0 +1,46 @@
+# Node.js dependencies
+**/node_modules/
+**/npm-debug.log*
+**/yarn-error.log*
+**/pnpm-lock.yaml
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (NEVER commit secrets)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Build outputs
+dist/
+build/
+coverage/
+.cache/
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor configs
+.vscode/
+.idea/
+*.swp
+
+# TypeScript (if you add TS later)
+**/*.tsbuildinfo
+
+# Grafana/Prometheus data folders (if you ever mount them locally)
+grafana-data/
+prometheus-data/
