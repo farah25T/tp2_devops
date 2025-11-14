@@ -17,7 +17,7 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   transports: [new winston.transports.Console()],
 });
-
+console.log("Logger initialized with level:");
 // ---------- Middlewares ----------
 app.use(cors());
 app.use(express.json());

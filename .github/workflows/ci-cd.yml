@@ -1,4 +1,4 @@
-name: CI Backend
+name: CI/CD Backend
 
 on:
   push:
@@ -11,21 +11,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install deps
+      - name: Install dependencies
         working-directory: backend
         run: npm ci
 
       - name: Run tests
         working-directory: backend
-        run: npm test || echo "no tests"
+        run: npm test || echo "no tests yet"
 
+      # Optionnel: build Docker image pour vérifier que ça build
       - name: Build Docker image
         run: docker build -t tp2-backend ./backend
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    needs: backend-ci  # ce job attend que backend-ci soit OK
+
+    # On ne déploie que sur un push direct sur main, pas sur les PR
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Trigger backend deploy on Render
+        run: curl -X POST "$RENDER_BACKEND_DEPLOY_HOOK"
+        env:
+          RENDER_BACKEND_DEPLOY_HOOK: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
