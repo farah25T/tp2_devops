@@ -74,6 +74,9 @@ app.get("/metrics", async (req, res) => {
   res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
 });
+app.get("/hello", (req, res) => {
+  res.json({ message: "Hello from CI/CD test!" });
+});
 
 app.get("/users", (req, res) => {
   res.json(users);
